@@ -1,17 +1,61 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div class="main">
+      <div class="calendar-holder">
+        <calendar :events="events" />
+      </div>
+      <div class="form-holder">
+        <h3>Schedule an event</h3>
+        <event-form @newEvent="handleNewEvent" />
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Calendar from './components/Calendar.vue'
+import EventForm from './components/EventForm.vue'
+import Pusher from 'pusher-js';
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    Calendar,
+    EventForm
+  },
+  data(){
+    return {
+      events: [{
+        title     :  'event1',
+        start     : '2018-07-09',
+        cssClass  : 'blue',
+        YOUR_DATA : {}
+      },
+      {
+        title     : 'event2',
+        start     : '2018-07-10',
+        end       : '2018-07-13',
+        cssClass  : ['orange']
+      }] 
+    }
+  },
+  methods: {
+    handleNewEvent(event){
+      this.events.push(event);
+    }
+  },
+  created(){
+    const pusher = new Pusher('3dddad24c242ae9a36ca', {
+      cluster: 'eu',
+      encrypted: true,
+    });
+    const channel = pusher.subscribe('schedule');
+    channel.bind('new-event', (data) => {
+      this.events = [
+        ...this.events,
+        data
+      ]
+    })
   }
 }
 </script>
@@ -24,5 +68,24 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+.main {
+  display: flex;
+  align-items: center;
+}
+.calendar-holder {
+  width: 65%;
+}
+.form-holder {
+  width: 35%;
+}
+
+.form-holder > h3 {
+  color: orangered;
+  text-transform: uppercase;
+  font-size: 16px;
+  text-align: left;
+  margin-left: 30px;
+  margin-bottom: 10px;
 }
 </style>
