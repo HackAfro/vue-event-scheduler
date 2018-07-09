@@ -51,7 +51,7 @@ export default {
         start,
         end
       }
-      const req = await fetch('http://localhost:4001/schedule', {
+      const req = await fetch('http://localhost:4000/schedule', {
         method: 'POST',
         body: JSON.stringify(event),
         headers: {
@@ -59,7 +59,6 @@ export default {
         }
       });
       const res = await req.json();
-      this.$emit('newEvent', res);
       this.resetValues();
     },
     selectColor(color){

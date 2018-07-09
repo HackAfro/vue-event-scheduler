@@ -6,7 +6,7 @@
       </div>
       <div class="form-holder">
         <h3>Schedule an event</h3>
-        <event-form @newEvent="handleNewEvent" />
+        <event-form />
       </div>
     </div>
   </div>
@@ -39,14 +39,10 @@ export default {
       }] 
     }
   },
-  methods: {
-    handleNewEvent(event){
-      this.events.push(event);
-    }
-  },
   created(){
-    const pusher = new Pusher('3dddad24c242ae9a36ca', {
-      cluster: 'eu',
+    // Add your pusher credentials
+    const pusher = new Pusher('PUSHER_KEY', {
+      cluster: 'PUSHER_CLUSTER',
       encrypted: true,
     });
     const channel = pusher.subscribe('schedule');
