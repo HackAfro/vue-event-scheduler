@@ -15,9 +15,9 @@ Realtime event scheduling using Pusher and VueJS
 - Create a file named `.env`. Update the `.env` file with the content below:
 
 ```
-PUSHER_APP_ID=app-id
-PUSHER_APP_KEY=app-key
-PUSHER_APP_SECRET=app-secret
+PUSHER_ID=app-id
+PUSHER_KEY=app-key
+PUSHER_SECRET=app-secret
 PUSHER_CLUSTER=cluster
 ```
 
